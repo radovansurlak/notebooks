@@ -1,11 +1,9 @@
 "use client";
 import { ChangeEvent, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import makeIdGenerator from "./idGen";
-import { FaPlay } from "react-icons/fa6";
 import { LuPlus } from "react-icons/lu";
 import { isHTML } from "./utils/isHTML";
-import { BlockProps } from "./types";
+import { Block } from "./Block";
 
 const { generateId, getIds } = makeIdGenerator();
 
@@ -14,36 +12,6 @@ const createBlock = (value: string = ""): Block => ({
   id: generateId(),
   output: null,
 });
-
-const Block = ({ block, handleInputChange, handleRunBlock }: BlockProps) => {
-  return (
-    <div className="flex-col" key={block.id}>
-      <label className="text-md font-mono">{block.id}</label>
-      <div className="flex">
-        <div className="flex-col grow">
-          <textarea
-            placeholder="textarea"
-            value={block.value}
-            className="border-4 rounded-lg border-solid w-full font-mono p-2"
-            onChange={(event) => handleInputChange(block.id, event)}
-          />
-          {block.output ? (
-            <p className="bg-gray-200 mt-2 p-2 whitespace-pre">
-              {block.output}
-            </p>
-          ) : null}
-        </div>
-        <button
-          onClick={() => handleRunBlock(block.id, block.value)}
-          className="ml-4 bg-gray-400 px-4 py-2 hover:bg-gray-500 rounded text-white self-start flex items-center"
-        >
-          <FaPlay />
-          <span className="ml-2">Run</span>
-        </button>
-      </div>
-    </div>
-  );
-};
 
 export default function Home() {
   const [blocks, setBlocks] = useState<Block[]>([]);
